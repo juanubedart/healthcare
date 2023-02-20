@@ -1,0 +1,3 @@
+-- CREATE DATABASE IF NOT EXIST
+SELECT 'CREATE DATABASE cet-health'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'cet-health')\gexec
