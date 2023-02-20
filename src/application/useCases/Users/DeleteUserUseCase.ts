@@ -22,7 +22,7 @@ export class DeleteUserUseCase {
 
       return user
     } catch (error) {
-      throw new ErrorManager.createSignature(error.message)
+      throw ErrorManager.createSignature(error.message)
     }
   }
 }

@@ -23,7 +23,7 @@ export class GetByIdUserUseCase {
 
       return user
     } catch (error) {
-      throw new ErrorManager(error.message)
+      throw ErrorManager.createSignature(error.message)
     }
   }
 }

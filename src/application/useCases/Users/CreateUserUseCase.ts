@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@nestjs/common"
 import { User } from "../../../domain/User/User"
 import { UserDto } from "../../../infrastructure/dto/UsersDto"
 import { UserRepository } from "../../../domain/User/UserRepository"
+import { ErrorManager } from "../../../infrastructure/errorHandler/ErrorManager"
 
 @Injectable()
 export class CreateUserUseCase {
@@ -15,7 +16,7 @@ export class CreateUserUseCase {
       const user = await this.userRepository.create(body)
       return user
     } catch (error) {
-      throw new Error(error)
+      throw ErrorManager.createSignature(error)
     }
   }
 }
