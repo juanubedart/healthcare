@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from "@nestjs/common"
+import { Inject, Injectable } from "@nestjs/common"
 import { ErrorManager } from "src/infrastructure/errorHandler/ErrorManager"
 import { User } from "../../../domain/User/User"
 import { UserRepository } from "../../../domain/User/UserRepository"
@@ -12,7 +12,6 @@ export class GetByIdUserUseCase {
 
   public async execute(id: string): Promise<User> {
     try {
-      Logger.debug(id)
       const user: User = await this.userRepository.findOne(id)
       if (!user) {
         throw new ErrorManager({

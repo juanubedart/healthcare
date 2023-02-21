@@ -9,6 +9,7 @@ import { GetAllUserUseCase } from "../../application/useCases/Users/GetAllUserUs
 import { GetByIdUserUseCase } from "../../application/useCases/Users/GetByIdUserUseCase"
 import { UpdateUserUseCase } from "../../application/useCases/Users/UpdateUserUseCase"
 import { DeleteUserUseCase } from "../../application/useCases/Users/DeleteUserUseCase"
+import { GetOneUserUseCase } from "../../application/useCases/Users/GetOneUserUseCase"
 
 @Module({
   imports: [TypeOrmModule.forFeature([Users])],
@@ -19,10 +20,12 @@ import { DeleteUserUseCase } from "../../application/useCases/Users/DeleteUserUs
     },
     CreateUserUseCase,
     GetAllUserUseCase,
+    GetOneUserUseCase,
     GetByIdUserUseCase,
     UpdateUserUseCase,
     DeleteUserUseCase,
   ],
   controllers: [UsersController],
+  exports: [GetOneUserUseCase, TypeOrmModule, UserRepository],
 })
 export class UsersModule {}

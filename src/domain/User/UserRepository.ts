@@ -1,5 +1,5 @@
 import { Repository } from "../Repository"
 import { User } from "./User"
 export abstract class UserRepository extends Repository<User> {
-  abstract findByEmail(email: string): Promise<User>
+  abstract findBy({ key, value }: { key: keyof any; value: any }): Promise<User>
 }

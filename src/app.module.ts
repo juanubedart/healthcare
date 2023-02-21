@@ -6,6 +6,7 @@ import { AppService } from "./app.service"
 import { UsersModule } from "./infrastructure/modules/users.module"
 import { DataSourceConfig } from "./infrastructure/config/data.source"
 import { ParientsModule } from "./infrastructure/modules/parients.module"
+import { AuthModule } from "./infrastructure/modules/auth.module"
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ParientsModule } from "./infrastructure/modules/parients.module"
     TypeOrmModule.forRoot(DataSourceConfig),
     UsersModule,
     ParientsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
