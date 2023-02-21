@@ -7,6 +7,8 @@ import { Users } from "../entities/UsersEntity"
 import { CreateUserUseCase } from "../../application/useCases/Users/CreateUserUseCase"
 import { GetAllUserUseCase } from "../../application/useCases/Users/GetAllUserUseCase"
 import { GetByIdUserUseCase } from "../../application/useCases/Users/GetByIdUserUseCase"
+import { UpdateUserUseCase } from "../../application/useCases/Users/UpdateUserUseCase"
+import { DeleteUserUseCase } from "../../application/useCases/Users/DeleteUserUseCase"
 
 @Module({
   imports: [TypeOrmModule.forFeature([Users])],
@@ -18,6 +20,8 @@ import { GetByIdUserUseCase } from "../../application/useCases/Users/GetByIdUser
     CreateUserUseCase,
     GetAllUserUseCase,
     GetByIdUserUseCase,
+    UpdateUserUseCase,
+    DeleteUserUseCase,
   ],
   controllers: [UsersController],
 })

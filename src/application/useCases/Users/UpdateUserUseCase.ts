@@ -22,7 +22,7 @@ export class UpdateUserUseCase {
       }
       return user
     } catch (error) {
-      throw new ErrorManager.createSignature(error.message)
+      throw ErrorManager.createSignature(error.message)
     }
   }
 }
