@@ -11,8 +11,12 @@ export class TypeOrmUserRepository extends UserRepository {
   ) {
     super()
   }
-  public async findByCode(name: string): Promise<User> {
-    const user = await this.userRepository.findOneBy({ name })
+  public async findBy({ key, value }: { key: keyof any; value: any }): Promise<User> {
+    const user = await this.userRepository
+      .createQueryBuilder("user")
+      .where({ [key]: value })
+      .getOne()
+
     return user
   }
   public async findByEmail(email: string): Promise<User> {
