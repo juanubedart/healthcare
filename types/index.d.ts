@@ -11,5 +11,7 @@ declare namespace NodeJS {
     DB_NAME: string
     HASH_SALT: string
     JWT_SECRET: string
+    SENTRY_DSN: string
+    SENTRY_ENABLED: boolean
   }
 }
