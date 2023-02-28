@@ -1,7 +1,7 @@
 import { Exclude } from "class-transformer"
 import { Column, Entity, OneToMany } from "typeorm"
 import { BaseEntity } from "./BaseEntity"
-import { Parients } from "./ParientEntity"
+import { Patients } from "./PatientEntity"
 
 @Entity({ name: "users" })
 export class Users extends BaseEntity {
@@ -18,6 +18,6 @@ export class Users extends BaseEntity {
   @Column("varchar", { length: 255, nullable: false })
   password: string
 
-  @OneToMany(() => Parients, (parients) => parients.user)
-  parients: Parients[]
+  @OneToMany(() => Patients, (patients) => patients.user)
+  patients: Patients[]
 }

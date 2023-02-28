@@ -2,8 +2,8 @@ import { Column, Entity, ManyToOne } from "typeorm"
 import { BaseEntity } from "./BaseEntity"
 import { Users } from "./UsersEntity"
 
-@Entity({ name: "parients" })
-export class Parients extends BaseEntity {
+@Entity({ name: "patients" })
+export class Patients extends BaseEntity {
   @Column("varchar", { length: 255, nullable: false })
   name: string
 
@@ -16,9 +16,6 @@ export class Parients extends BaseEntity {
   @Column("float", { nullable: false })
   weight: number
 
-  @Column("varchar", { length: 100, nullable: true })
-  healthcard: string
-
-  @ManyToOne(() => Users, (users) => users.parients)
+  @ManyToOne(() => Users, (users) => users.patients)
   user: Users
 }

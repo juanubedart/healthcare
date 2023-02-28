@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common"
-import { ErrorManager } from "../../../infrastructure/errorHandler/ErrorManager"
 import { UpdateResult } from "typeorm"
 import { UserRepository } from "../../../domain/User/UserRepository"
 import { UserUpdateDto } from "../../../infrastructure/dto/UsersDto"
+import { ErrorManager } from "../../../infrastructure/errorHandler/ErrorManager"
 
 @Injectable()
 export class UpdateUserUseCase {
@@ -13,8 +13,9 @@ export class UpdateUserUseCase {
 
   public async execute(id: string, body: UserUpdateDto): Promise<UpdateResult | undefined> {
     try {
-      const user: UpdateResult = await this.userRepository.update(id, body)
-      if (user.affected === 0) {
+      const user: UpdateResult | undefined = await this.userRepository.update(id, body)
+
+      if (user?.affected === 0) {
         throw new ErrorManager({
           type: "BAD_REQUEST",
           message: "could not modify user",

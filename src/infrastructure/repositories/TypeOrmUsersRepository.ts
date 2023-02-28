@@ -1,8 +1,8 @@
+import { InjectRepository } from "@nestjs/typeorm"
+import { DeleteResult, Repository, UpdateResult } from "typeorm"
+import { User } from "../../domain/User/User"
 import { UserRepository } from "../../domain/User/UserRepository"
 import { Users } from "../entities/UsersEntity"
-import { InjectRepository } from "@nestjs/typeorm"
-import { User } from "../../domain/User/User"
-import { DeleteResult, Repository, UpdateResult } from "typeorm"
 
 export class TypeOrmUserRepository extends UserRepository {
   constructor(
@@ -19,10 +19,7 @@ export class TypeOrmUserRepository extends UserRepository {
 
     return user
   }
-  public async findByEmail(email: string): Promise<User> {
-    const user = await this.userRepository.findOneBy({ email })
-    return user
-  }
+
   public async create(entity: User): Promise<User> {
     const newUser = await this.userRepository.save(entity)
     return newUser
@@ -36,7 +33,12 @@ export class TypeOrmUserRepository extends UserRepository {
     return deletedUser
   }
   public async findOne(id: string): Promise<User> {
-    const user = await this.userRepository.createQueryBuilder("user").where({ id }).getOne()
+    const user = await this.userRepository
+      .createQueryBuilder("user")
+      .where({ id })
+      .leftJoinAndSelect("user.patients", "patients")
+      .getOne()
+
     return user
   }
   public async findAll(): Promise<User[]> {

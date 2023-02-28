@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common"
-import { GetOneUserUseCase } from "../Users/GetOneUserUseCase"
+import * as jwt from "jsonwebtoken"
 import { ErrorManager } from "../../../infrastructure/errorHandler/ErrorManager"
 import { Crypto } from "../../../infrastructure/utils/crypto/Crypto"
-import { JwtService } from "@nestjs/jwt"
+import { GetOneUserUseCase } from "../Users/GetOneUserUseCase"
 
 @Injectable()
 export class AuthorizationUserUseCase {
-  constructor(private readonly getOneUserUseCase: GetOneUserUseCase, private readonly jwtService: JwtService) {}
+  constructor(private readonly getOneUserUseCase: GetOneUserUseCase) {}
 
   public async execute(email: string, password: string) {
     try {
@@ -44,17 +44,18 @@ export class AuthorizationUserUseCase {
     }
   }
 
-  private async SignJWT(payload: any): Promise<string> {
-    return await this.jwtService.sign(payload)
+  private async SignJWT(payload: any, secret: string, expires: number | string): Promise<string> {
+    return await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: expires })
   }
 
   private async generateJWT(user: any): Promise<any> {
-    const payload = { email: user.email }
+    const payload = { email: user.email, sub: user.id }
 
-    const token = await this.SignJWT(payload)
+    const token = await this.SignJWT(payload, process.env.JWT_SECRET, "1d")
 
     return {
       access_token: token,
+      user,
     }
   }
 }

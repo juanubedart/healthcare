@@ -1,7 +1,7 @@
-import { Inject, Injectable, Logger } from "@nestjs/common"
+import { Inject, Injectable } from "@nestjs/common"
 import { User } from "../../../domain/User/User"
-import { UserDto } from "../../../infrastructure/dto/UsersDto"
 import { UserRepository } from "../../../domain/User/UserRepository"
+import { UserDto } from "../../../infrastructure/dto/UsersDto"
 import { ErrorManager } from "../../../infrastructure/errorHandler/ErrorManager"
 import { Crypto } from "../../../infrastructure/utils/crypto/Crypto"
 
@@ -15,8 +15,8 @@ export class CreateUserUseCase {
   public async execute(body: UserDto): Promise<User> {
     try {
       const encryptedPassword = await new Crypto().encrypt(body.password)
-
       body.password = encryptedPassword
+
       const user = await this.userRepository.create(body)
       return user
     } catch (error) {
