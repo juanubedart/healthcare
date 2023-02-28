@@ -1,15 +1,15 @@
 import { Module } from "@nestjs/common"
-import { UsersController } from "../controllers/users.controller"
-import { UserRepository } from "../../domain/User/UserRepository"
-import { TypeOrmUserRepository } from "../repositories/TypeOrmUsersRepository"
 import { TypeOrmModule } from "@nestjs/typeorm"
-import { Users } from "../entities/UsersEntity"
 import { CreateUserUseCase } from "../../application/useCases/Users/CreateUserUseCase"
+import { DeleteUserUseCase } from "../../application/useCases/Users/DeleteUserUseCase"
 import { GetAllUserUseCase } from "../../application/useCases/Users/GetAllUserUseCase"
 import { GetByIdUserUseCase } from "../../application/useCases/Users/GetByIdUserUseCase"
-import { UpdateUserUseCase } from "../../application/useCases/Users/UpdateUserUseCase"
-import { DeleteUserUseCase } from "../../application/useCases/Users/DeleteUserUseCase"
 import { GetOneUserUseCase } from "../../application/useCases/Users/GetOneUserUseCase"
+import { UpdateUserUseCase } from "../../application/useCases/Users/UpdateUserUseCase"
+import { UserRepository } from "../../domain/User/UserRepository"
+import { UsersController } from "../controllers/users.controller"
+import { Users } from "../entities/UsersEntity"
+import { TypeOrmUserRepository } from "../repositories/TypeOrmUsersRepository"
 
 @Module({
   imports: [TypeOrmModule.forFeature([Users])],
@@ -26,6 +26,6 @@ import { GetOneUserUseCase } from "../../application/useCases/Users/GetOneUserUs
     DeleteUserUseCase,
   ],
   controllers: [UsersController],
-  exports: [GetOneUserUseCase, TypeOrmModule, UserRepository],
+  exports: [GetOneUserUseCase, TypeOrmModule, UserRepository, GetByIdUserUseCase],
 })
 export class UsersModule {}

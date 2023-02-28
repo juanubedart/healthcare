@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common"
-import { GetOneUserUseCase } from "../Users/GetOneUserUseCase"
+import * as jwt from "jsonwebtoken"
 import { ErrorManager } from "../../../infrastructure/errorHandler/ErrorManager"
 import { Crypto } from "../../../infrastructure/utils/crypto/Crypto"
-import * as jwt from "jsonwebtoken"
+import { GetOneUserUseCase } from "../Users/GetOneUserUseCase"
 
 @Injectable()
 export class AuthorizationUserUseCase {
@@ -24,7 +24,7 @@ export class AuthorizationUserUseCase {
 
       if (!user) {
         throw new ErrorManager({
-          type: "FORBIDDEN",
+          type: "UNAUTHORIZED",
           message: "Invalid credentials",
         })
       }
@@ -33,7 +33,7 @@ export class AuthorizationUserUseCase {
 
       if (!match) {
         throw new ErrorManager({
-          type: "FORBIDDEN",
+          type: "UNAUTHORIZED",
           message: "Invalid credentials",
         })
       }
@@ -44,27 +44,17 @@ export class AuthorizationUserUseCase {
     }
   }
 
-  private async SignJWT({
-    payload,
-    secret,
-    expires,
-  }: {
-    payload: jwt.JWTPayload
-    secret: string
-    expires: number | string
-  }): Promise<string> {
-    return await jwt.sign(payload, secret, { expiresIn: expires })
+  private async SignJWT(payload: any, secret: string, expires: number | string): Promise<string> {
+    return await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: expires })
   }
 
   private async generateJWT(user: any): Promise<any> {
-    const payload = { id: user.id }
-    const secret = process.env.JWT_SECRET
-    const expires = "1d"
+    const payload = { email: user.email, sub: user.id }
 
-    const token = await this.SignJWT({ payload, secret, expires })
+    const token = await this.SignJWT(payload, process.env.JWT_SECRET, "1d")
 
     return {
-      accessToken: token,
+      access_token: token,
       user,
     }
   }

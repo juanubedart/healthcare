@@ -1,13 +1,17 @@
-import { Body, Controller, Post, Get, Param, Put, Delete } from "@nestjs/common"
-import { UserDto, UserUpdateDto } from "../dto/UsersDto"
-import { User } from "../../domain/User/User"
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common"
+
 import { CreateUserUseCase } from "../../application/useCases/Users/CreateUserUseCase"
+import { DeleteUserUseCase } from "../../application/useCases/Users/DeleteUserUseCase"
 import { GetAllUserUseCase } from "../../application/useCases/Users/GetAllUserUseCase"
 import { GetByIdUserUseCase } from "../../application/useCases/Users/GetByIdUserUseCase"
 import { UpdateUserUseCase } from "../../application/useCases/Users/UpdateUserUseCase"
-import { DeleteUserUseCase } from "../../application/useCases/Users/DeleteUserUseCase"
+import { User } from "../../domain/User/User"
+import { PublicAccess } from "../decorators/PublicDecorator"
+import { UserDto, UserUpdateDto } from "../dto/UsersDto"
+import { AuthGuard } from "../guards/auth.guard"
 
 @Controller("users")
+@UseGuards(AuthGuard)
 export class UsersController {
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,
@@ -17,6 +21,7 @@ export class UsersController {
     private readonly deleteUserUseCase: DeleteUserUseCase,
   ) {}
 
+  @PublicAccess()
   @Post("register")
   public async registerUser(@Body() body: UserDto) {
     const user: User = await this.createUserUseCase.execute(body)
