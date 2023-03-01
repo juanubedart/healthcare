@@ -1,0 +1,6 @@
+{
+  "NOT_DELETE_PATIENT": "No se ha podido eliminar el paciente",
+  "NOT_FOUND_PATIENTS": "No se han encontrado pacientes",
+  "NOT_FOUND_PATIENT": "No se ha encontrado el paciente",
+  "NOT_UPDATED_PATIENT": "No se ha podido modificar los datos del paciente"
+}

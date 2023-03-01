@@ -18,6 +18,9 @@ export class Users extends BaseEntity {
   @Column("varchar", { length: 255, nullable: false })
   password: string
 
+  @Column("varchar", { length: 10, nullable: false, default: "es" })
+  lang: string
+
   @OneToMany(() => Patients, (patients) => patients.user)
   patients: Patients[]
 }

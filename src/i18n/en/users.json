@@ -1,0 +1,6 @@
+{
+  "NOT_DELETE_USER": "could not delete user",
+  "NOT_FOUND_USERS": "Not found users",
+  "NOT_FOUND_USER": "Not found user",
+  "NOT_UPDATED_USER": "could not modify user"
+}
