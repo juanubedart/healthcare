@@ -1,13 +1,18 @@
-import { Inject, Injectable } from "@nestjs/common"
-import { UserRepository } from "../../../domain/User/UserRepository"
+import { Inject, Injectable, Scope } from "@nestjs/common"
+import { REQUEST } from "@nestjs/core"
+import { Request } from "express"
+import { TranslatorService } from "nestjs-translator"
 import { User } from "../../../domain/User/User"
+import { UserRepository } from "../../../domain/User/UserRepository"
 import { ErrorManager } from "../../../infrastructure/errorHandler/ErrorManager"
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class GetAllUserUseCase {
   constructor(
     @Inject(UserRepository)
     private readonly userRepository: UserRepository,
+    private readonly translator: TranslatorService,
+    @Inject(REQUEST) private readonly request: Request,
   ) {}
 
   public async execute(): Promise<User[]> {
@@ -17,7 +22,7 @@ export class GetAllUserUseCase {
       if (users.length === 0) {
         throw new ErrorManager({
           type: "BAD_REQUEST",
-          message: "No users found",
+          message: this.translator.translate("NOT_FOUND_USERS", { lang: this.request.lang }),
         })
       }
 

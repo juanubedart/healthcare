@@ -1,12 +1,13 @@
 import { Injectable } from "@nestjs/common"
 import * as jwt from "jsonwebtoken"
+import { TranslatorService } from "nestjs-translator"
 import { ErrorManager } from "../../../infrastructure/errorHandler/ErrorManager"
 import { Crypto } from "../../../infrastructure/utils/crypto/Crypto"
 import { GetOneUserUseCase } from "../Users/GetOneUserUseCase"
 
 @Injectable()
 export class AuthorizationUserUseCase {
-  constructor(private readonly getOneUserUseCase: GetOneUserUseCase) {}
+  constructor(private readonly getOneUserUseCase: GetOneUserUseCase, private readonly translator: TranslatorService) {}
 
   public async execute(email: string, password: string) {
     try {
@@ -25,7 +26,7 @@ export class AuthorizationUserUseCase {
       if (!user) {
         throw new ErrorManager({
           type: "UNAUTHORIZED",
-          message: "Invalid credentials",
+          message: this.translator.translate("INVALID_CREDENTIALS"),
         })
       }
 
@@ -34,7 +35,7 @@ export class AuthorizationUserUseCase {
       if (!match) {
         throw new ErrorManager({
           type: "UNAUTHORIZED",
-          message: "Invalid credentials",
+          message: this.translator.translate("INVALID_CREDENTIALS"),
         })
       }
 

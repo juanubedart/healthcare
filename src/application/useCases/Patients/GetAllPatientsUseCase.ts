@@ -1,13 +1,18 @@
-import { Inject, Injectable, Logger } from "@nestjs/common"
+import { Inject, Injectable, Logger, Scope } from "@nestjs/common"
+import { REQUEST } from "@nestjs/core"
+import { Request } from "express"
+import { TranslatorService } from "nestjs-translator"
 import { Patient } from "../../../domain/Patient/Patient"
 import { PatientRepository } from "../../../domain/Patient/PatientRepository"
 import { ErrorManager } from "../../../infrastructure/errorHandler/ErrorManager"
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class GetAllPatientsUseCase {
   constructor(
     @Inject(PatientRepository)
     private readonly patientRepository: PatientRepository,
+    private readonly translator: TranslatorService,
+    @Inject(REQUEST) private readonly request: Request,
   ) {}
 
   public async execute(): Promise<Patient[]> {
@@ -18,7 +23,7 @@ export class GetAllPatientsUseCase {
       if (patients.length === 0) {
         throw new ErrorManager({
           type: "BAD_REQUEST",
-          message: "No patients found",
+          message: this.translator.translate("NOT_FOUND_PATIENTS", { lang: this.request.lang }),
         })
       }
 

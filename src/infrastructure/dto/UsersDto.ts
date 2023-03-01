@@ -16,6 +16,10 @@ export class UserDto {
   @IsNotEmpty()
   @IsString()
   password: string
+
+  @IsNotEmpty()
+  @IsString()
+  lang: string
 }
 
 export class UserUpdateDto {
@@ -34,4 +38,8 @@ export class UserUpdateDto {
   @IsOptional()
   @IsString()
   password: string
+
+  @IsOptional()
+  @IsString()
+  lang: string
 }
