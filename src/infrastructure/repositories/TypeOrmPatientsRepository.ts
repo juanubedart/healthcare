@@ -1,10 +1,10 @@
 import { InjectRepository } from "@nestjs/typeorm"
-import { Patient } from "src/domain/Patient/Patient"
 import { DeleteResult, Repository, UpdateResult } from "typeorm"
+import { Patient } from "../../domain/Patient/Patient"
 import { PatientRepository } from "../../domain/Patient/PatientRepository"
 import { Patients } from "../entities/PatientEntity"
 
-export class TypeOrmParientsRepository extends PatientRepository {
+export class TypeOrmPatientsRepository extends PatientRepository {
   constructor(
     @InjectRepository(Patients)
     private readonly patientsRepository: Repository<Patients>,
@@ -25,7 +25,12 @@ export class TypeOrmParientsRepository extends PatientRepository {
     return deletedUser
   }
   public async findOne(id: string): Promise<Patient> {
-    const patient = await this.patientsRepository.createQueryBuilder("patients").where({ id }).getOne()
+    const patient = await this.patientsRepository
+      .createQueryBuilder("patients")
+      .where({ id })
+      .leftJoinAndSelect("patients.eventsMedicalHistory", "eventsMedicalHistory")
+      .getOne()
+
     return patient
   }
   public async findAll(): Promise<Patient[]> {

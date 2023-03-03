@@ -9,6 +9,7 @@ import { AppController } from "./app.controller"
 import { AppService } from "./app.service"
 import { DataSourceConfig } from "./infrastructure/config/data.source"
 import { AuthModule } from "./infrastructure/modules/auth.module"
+import { EventMedicalHistoryModule } from "./infrastructure/modules/eventMedicalHistory.module"
 import { PatientsModule } from "./infrastructure/modules/patients.module"
 import { UsersModule } from "./infrastructure/modules/users.module"
 import { SentryMiddleware } from "./infrastructure/sentry/sentry.middleware"
@@ -35,6 +36,7 @@ import { SentryMiddleware } from "./infrastructure/sentry/sentry.middleware"
         enabled: process.env.SENTRY_ENABLED,
       }),
     }),
+    EventMedicalHistoryModule,
   ],
   controllers: [AppController],
   providers: [
