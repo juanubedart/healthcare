@@ -9,7 +9,7 @@ import { GetByIdUserUseCase } from "../../application/useCases/Users/GetByIdUser
 import { PatientRepository } from "../../domain/Patient/PatientRepository"
 import { PatientsController } from "../controllers/patients.controller"
 import { Patients } from "../entities/PatientEntity"
-import { TypeOrmParientsRepository } from "../repositories/TypeOrmParientsRepository"
+import { TypeOrmPatientsRepository } from "../repositories/TypeOrmPatientsRepository"
 import { UsersModule } from "./users.module"
 
 @Module({
@@ -17,7 +17,7 @@ import { UsersModule } from "./users.module"
   providers: [
     {
       provide: PatientRepository,
-      useClass: TypeOrmParientsRepository,
+      useClass: TypeOrmPatientsRepository,
     },
     CreatePatientUseCase,
     GetByIdPatientUseCase,

@@ -1,0 +1,5 @@
+{
+  "NOT_FOUND_EVENT": "No se ha encontrado el evento",
+  "NOT_UPDATED_EVENT": "No se ha podido modificar el evento",
+  "NOT_DELETE_EVENT": "No se ha podido elminar el evento"
+}

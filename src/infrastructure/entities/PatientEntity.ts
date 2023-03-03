@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne } from "typeorm"
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm"
 import { BaseEntity } from "./BaseEntity"
+import { EventsMedicalHistory } from "./EventMedicalHistory"
 import { Users } from "./UsersEntity"
 
 @Entity({ name: "patients" })
@@ -18,4 +19,7 @@ export class Patients extends BaseEntity {
 
   @ManyToOne(() => Users, (users) => users.patients)
   user: Users
+
+  @OneToMany(() => EventsMedicalHistory, (eventsMedicalHistory) => eventsMedicalHistory.patient)
+  eventsMedicalHistory: EventsMedicalHistory[]
 }

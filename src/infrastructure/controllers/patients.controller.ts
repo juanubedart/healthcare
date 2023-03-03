@@ -2,8 +2,8 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nes
 import { GetAllPatientsUseCase } from "../../application/useCases/Patients/GetAllPatientsUseCase"
 import { Patient } from "../../domain/Patient/Patient"
 
-import { DeletePatientUseCase } from "src/application/useCases/Patients/DeleteUserUseCase"
 import { CreatePatientUseCase } from "../../application/useCases/Patients/CreatePatientUseCase"
+import { DeletePatientUseCase } from "../../application/useCases/Patients/DeleteUserUseCase"
 import { GetByIdPatientUseCase } from "../../application/useCases/Patients/GetByIdPatientUseCase"
 import { UpdatePatientUseCase } from "../../application/useCases/Patients/UpdatePatientUseCase"
 import { PatientDto, PatientUpdateDto } from "../dto/PatientDto"
@@ -25,6 +25,7 @@ export class PatientsController {
     const patient = await this.createPatientUseCase.execute(body)
     return patient
   }
+
   @Get("all")
   public async getAllPatients() {
     const patients: Patient[] = await this.getAllPatienstUseCase.execute()

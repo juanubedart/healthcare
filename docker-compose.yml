@@ -3,12 +3,12 @@ version: "3.1"
 services:
   cet-health_pg:
     image: postgres:15.1
-    container_name: cet-health_pg
+    container_name: healthcare_pg
     restart: always
     environment:
-      POSTGRES_USER: cet-health
+      POSTGRES_USER: admin
       POSTGRES_PASSWORD: Cet-Health!
-      POSTGRES_DB: cet-health
+      POSTGRES_DB: healthcare
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:

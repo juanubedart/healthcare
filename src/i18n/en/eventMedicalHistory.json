@@ -1,0 +1,5 @@
+{
+  "NOT_FOUND_EVENT": "Not found event medical",
+  "NOT_UPDATED_EVENT": "could not modify event",
+  "NOT_DELETE_EVENT": "could not delete event"
+}
