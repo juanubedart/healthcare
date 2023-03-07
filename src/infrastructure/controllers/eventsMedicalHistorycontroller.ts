@@ -1,4 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common"
+import { GetByUserEventsMedicalHistoryUseCase } from "src/application/useCases/EventMedicalHistory/GetByUserEventsMedicalHistoryUseCase"
+import { GetByUserGroupedEventsMedicalHistoryUseCase } from "src/application/useCases/EventMedicalHistory/GetByUserGroupedEventsMedicalHistoryUseCase"
 import { CreateEventMedicalHistoryUseCase } from "../../application/useCases/EventMedicalHistory/CreateEventMedicalHistoryUseCase"
 import { DeleteEventMedicalHistoryUseCase } from "../../application/useCases/EventMedicalHistory/DeleteEventMedicalHistoryUseCase"
 import { GetByIdEventMedicalHistoryUseCase } from "../../application/useCases/EventMedicalHistory/GetByIdEventMedicalHIstoryUseCase"
@@ -14,6 +16,8 @@ export class EventMedicalHistoryController {
     private readonly getByIdEventMedicalHistoryUseCase: GetByIdEventMedicalHistoryUseCase,
     private readonly updateEventMedicalHistoryUseCase: UpdateEventMedicalHistoryUseCase,
     private readonly deleteEventMedicalHistoryUseCase: DeleteEventMedicalHistoryUseCase,
+    private readonly getByUserEventsMedicalHistoryUseCase: GetByUserEventsMedicalHistoryUseCase,
+    private readonly getByUserGroupedEventsMedicalHistoryUseCase: GetByUserGroupedEventsMedicalHistoryUseCase,
   ) {}
 
   @Post("register")
@@ -26,6 +30,18 @@ export class EventMedicalHistoryController {
   public async getEventById(@Param("id") id: string) {
     const event = await this.getByIdEventMedicalHistoryUseCase.execute(id)
     return event
+  }
+
+  @Get("user/:id")
+  public async getEventsByUser(@Param("id") id: string) {
+    const events = await this.getByUserEventsMedicalHistoryUseCase.execute(id)
+    return events
+  }
+
+  @Get("grouped/user/:id")
+  public async getEventsGroupedByUser(@Param("id") id: string) {
+    const events = await this.getByUserGroupedEventsMedicalHistoryUseCase.execute(id)
+    return events
   }
 
   @Put("edit/:id")
