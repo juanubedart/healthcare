@@ -25,15 +25,24 @@ export class TypeOrmEventsMedicalHistoryRepository extends EventMedicalHistoryRe
   }
   public async findOne(id: string): Promise<EventMedicalHistory> {
     const eventMedicalHistory: EventMedicalHistory = await this.eventMedicalHistoryRepository
-      .createQueryBuilder("eventMedicalHistory")
+      .createQueryBuilder("eventsMedicalHistory")
       .where({ id })
       .getOne()
     return eventMedicalHistory
   }
-  findAllbyUser(userId: string) {
-    throw new Error("Method not implemented.")
+  public async findAllbyUser(userId: string): Promise<EventMedicalHistory[]> {
+    const eventsMedicalHistory: EventMedicalHistory[] = await this.eventMedicalHistoryRepository
+      .createQueryBuilder("eventsMedicalHistory")
+      .where("patients.user = :user")
+      .leftJoin("eventsMedicalHistory.patient", "patients")
+      .leftJoin("patients.user", "users")
+      .setParameter("user", userId)
+      .getMany()
+
+    return eventsMedicalHistory
   }
 
+  // TODO: mirar si se puede omitir este método de la herencia.
   findAll(): Promise<EventMedicalHistory[]> {
     throw new Error("Method not implemented.")
   }
